@@ -1,0 +1,61 @@
+@import "tailwindcss";
+/* const inputStyle: string = `w-full bg-gray-700 p-2 rounded-md outline-none focus:ring-2 focus:ring-green-500 mt-2`; */
+
+:root {
+    --tw-shadow-custom: 0px 0px 20px rgba(49, 177, 141, 0.25);
+    /* --background-color: rgba(58, 58, 58, 0.56); */
+    --tw-input-style: w-full bg-[#1E1E1E] p-2 rounded-md outline-none focus:ring-2 focus:ring-green-500 mt-2;
+  }
+
+  /* @layer components {
+    .input-style {
+      @apply w-full bg-[#1E1E1E] p-2 rounded-md outline-none focus:ring-2 focus:ring-green-500 mt-2;
+    }
+  } */
+  
+
+@layer components {
+  .input-style {
+    @apply w-full bg-[rgba(30,30,30,0.56)] px-2 py-2 md:py-3 outline-none rounded-sm focus:ring-2 focus:ring-[#31B18D] mt-2;
+  }
+}
+
+/* .'montserrat': ['Montserrat'], */
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+.font-roboto {
+  font-family: 'Roboto', sans-serif;
+}
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Custom gradient underline for headings */
+.gradient-underline {
+  position: relative;
+  display: inline-block; /* Ensures the underline will span the width of the text */
+}
+
+.gradient-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 4px; /* Adjust thickness of the underline */
+  background: linear-gradient(90deg, #31B18D, #FFFFFF); /* Gradient color (adjust as needed) */
+  /* transform: scaleY(0); */
+  /* transform-origin: bottom;
+  transition: transform 0.3s ease; */
+}
+
+.gradient-bg{
+  background: linear-gradient(to right, #31B18D,#31B18D, #000000);
+  /* background-color: red;
+  background:linear-gradient(to right, red, blue) ; */
+}
+
+
+
+
