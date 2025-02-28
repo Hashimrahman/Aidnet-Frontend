@@ -1,50 +1,107 @@
-# React + TypeScript + Vite
+# AidNet Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AidNet is a disaster relief coordination platform designed to connect affected individuals, donors, and volunteers for efficient relief operations. This repository contains the frontend of AidNet, built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend Framework**: React (TypeScript)
+- **Bundler**: Vite
+- **State Management**: Zustand
+- **Data Fetching**: React Query
+- **Styling**: Tailwind CSS
+- **Routing**: React Router
+- **Authentication**: Google Sign up Integration
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- User authentication (Login, Sign up, Google OAuth)
+- Request aid and track status
+- Offer donations and manage resource availability
+- Volunteer task assignments and relief campaign tracking
+- Real-time notifications and updates
+- WebSocket-based real-time chat system
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Prerequisites
+
+Ensure you have the following installed:
+
+- Node.js (latest LTS recommended)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+
+   ```sh
+   git clone https://github.com/your-username/aidnet-frontend.git
+   cd aidnet-frontend
+   ```
+
+2. Install dependencies:
+
+   ```sh
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Start the development server:
+
+   ```sh
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+The application will be available at `http://localhost:5173/`.
+
+## Project Structure
+
+```
+├── src
+│   ├── components   # Reusable UI components
+│   ├── pages        # Page components
+│   ├── services     # API service handlers
+│   ├── store        # Zustand store for state management
+│   ├── Mutations    # Mutation functions
+│   ├── main.tsx     # Application entry point
+│   ├── App.tsx      # Main app component
+│
+├── public           # Static assets
+├── .env             # Environment variables
+├── tsconfig.json    # TypeScript configuration
+├── vite.config.ts   # Vite configuration
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Environment Variables
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Create a `.env` file in the root directory and configure the following:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```env
+VITE_API_BASE_URL=http://localhost:8000/api  # Backend API base URL
+VITE_GOOGLE_CLIENT_ID=your-google-client-id
 ```
+
+## Contributing
+
+Contributions are welcome! Please follow the guidelines below:
+
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature-name`).
+3. Commit your changes (`git commit -m 'Add new feature'`).
+4. Push to the branch (`git push origin feature-name`).
+5. Open a pull request.
+
+## License
+
+This project is licensed under the MIT License.
+
+## Contact
+
+For any inquiries or issues, feel free to reach out.
+
+- **Email**: hashimrahmanrh@gmail.com
+- **GitHub**: [Hashimrahman](https://github.com/Hashimrahman)
+
