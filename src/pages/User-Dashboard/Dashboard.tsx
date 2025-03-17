@@ -1,6 +1,9 @@
-import React from "react";
-import { MapPin, Users, Phone, MessageSquare } from "lucide-react";
+import React, { useEffect } from "react";
+import { MapPin, Users, Phone, MessageSquare, TriangleDashed, Locate, TriangleAlert } from "lucide-react";
 import camp1 from '../../assets/camp1.jpg';
+import { useCampaignStore } from "../../Store/useStore";
+import { useCampaignsMutations } from "../../Mutations/CampaignFetchMutaion";
+import { useJoinCampaignMutation, useLeaveCampaignMutation } from "../../Mutations/CampParticipationMutation";
 
 const camp = [
     { location: "Location A", capacity: 100, image: camp1 },
@@ -8,6 +11,31 @@ const camp = [
 ];
 
 const Dashboard: React.FC = () => {
+
+    const { mutate, data, error, isLoading } = useCampaignsMutations();
+    const { mutate: joinCampaign } = useJoinCampaignMutation()
+    const { mutate: leaveCampaign } = useLeaveCampaignMutation()
+    const setCampaigns = useCampaignStore((state) => state.setCampaigns);
+
+    useEffect(() => {
+        mutate()
+    }, [mutate])
+
+    useEffect(() => {
+        if (data) {
+            setCampaigns(data);
+            console.log("current camps", data)
+        }
+    }, [data, setCampaigns])
+
+    const handleJoin = (campaignId: string) => {
+        console.log("joining")
+        joinCampaign(campaignId)
+    }
+    const handleLeave = (campaignId: string) => {
+        leaveCampaign(campaignId)
+    }
+
     return (
         <div className="min-h-screen text-white pt-10 px-4 md:px-10">
             {/* Greeting */}
@@ -26,18 +54,50 @@ const Dashboard: React.FC = () => {
             {/* Active Campaigns */}
             <h2 className="text-xl md:text-2xl font-semibold mt-8">Active Campaigns</h2>
             <div className="mt-4 flex flex-wrap gap-6 justify-center lg:justify-start">
-                {camp.map((item, index) => (
-                    <div key={index} className="bg-white text-black p-4 rounded-lg flex flex-col md:flex-row items-center w-full md:w-[400px] shadow-lg">
-                        <img src={item.image} alt="Campaign" className="rounded-md w-24 h-24 object-cover" />
-                        <div className="mt-4 md:mt-0 md:ml-4 text-center md:text-left">
-                            <p className="flex items-center gap-1 justify-center md:justify-start"><MapPin size={16} /> <span>Location: {item.location}</span></p>
-                            <p className="flex items-center gap-1 justify-center md:justify-start"><Users size={16} /> <span>Capacity: {item.capacity}</span></p>
-                            <button className="mt-3 bg-[#31B18D] text-white px-5 py-2 rounded-full hover:bg-[#289a79] transition">
-                                Join
-                            </button>
+                {data?.filter(campaign => campaign.status == 'ongoing').map((campaign) => {
+                    const isParticipant = campaign.participations.some(
+                        (participation) => participation.user_id === Number(localStorage.getItem("userId"))
+                    );
+                    console.log(isParticipant)
+                    return (
+                        <div
+                            key={campaign.id}
+                            className="bg-white text-black rounded-lg p-4 flex flex-col md:flex-row shadow-md gap-4 w-full max-w-lg mx-auto"
+                        >
+                            <div className="md:w-1/3 w-full flex flex-col items-center">
+                                <img
+                                    src={campaign.image || camp1}
+                                    alt={campaign.disasterType}
+                                    className="w-full h-32 rounded-md object-cover"
+                                />
+                                <button
+                                    className={`mt-4 ${isParticipant ? 'bg-[#b13131]' : 'bg-[#31B18D]'} bg-[#31B18D] text-white px-4 py-2 rounded-full hover:bg-[#257a62] w-full`}
+                                    onClick={() => isParticipant ? handleLeave(campaign.id) : handleJoin(campaign.id)} // Use handleLeave if participant
+                                >
+                                    {isParticipant ? "Leave Campaign" : "Join Campaign"}
+                                </button>
+                            </div>
+
+                            <div className="mt-4 flex flex-col gap-2 items-start sm:w-2/3 w-full">
+                                <p className="flex flex-col md:flex-row md:gap-2 md:items-start text-lg">
+                                    <TriangleDashed className="hidden md:flex" /> <span className="font-semibold">Name:</span> {campaign.name}
+                                </p>
+                                <p className="flex flex-col md:flex-row md:gap-2 md:items-center text-lg">
+                                    <Locate className="hidden md:flex" /> <span className="font-semibold">Location:</span> {campaign.location}
+                                </p>
+                                <p className="flex md:gap-2 md:items-center text-lg gap-2">
+                                    <Users className="hidden md:flex" /> <span className="font-semibold">Capacity:</span> {campaign.max_capacity}
+                                </p>
+                                <p className="flex flex-col md:flex-row md:gap-2 md:items-center text-lg">
+                                    <Users className="hidden md:flex" /> <span className="font-semibold">Volunteers needed:</span> {Math.abs(campaign.volunteers_required - campaign.volunteers_registered)}
+                                </p>
+                                {/* <p className={`font-semibold ${getUrgencyColor(campaign.urgency)} flex flex-col md:flex-row md:gap-2 md:items-center text-lg`}>
+                                    <TriangleAlert /> Urgency: {campaign.urgency}
+                                </p> */}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    )
+                })}
             </div>
 
             {/* Contact Section */}

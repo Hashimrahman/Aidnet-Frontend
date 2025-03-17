@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios"
+import { api2 } from "../services/api";
+
 
 // interface Campaign {
 //     id: string;
@@ -18,7 +19,7 @@ import axios from "axios"
 // }
 
 export const fetchCampaigns = async () =>{
-    const response = await axios.get('http://localhost:8001/campaigns/get-campaigns/');
+    const response = await api2.get('/campaigns/get-create-campaigns/');
     return response.data
 }
 

@@ -35,6 +35,7 @@ const Login: React.FC = () => {
         toast.success("Login successful!", { position: "top-right" });
         localStorage.setItem("token",data.access_token)
         localStorage.setItem("userId",data.user.userId)
+        localStorage.setItem("role",data.user.role)
         console.log("user",data)
         if (data.user.role == 'affected') {
           navigate('/userDashboard', { replace: true })

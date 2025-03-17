@@ -13,7 +13,7 @@ import VolunteerTasks from './Tasks'
 // import RequestForm from "./RequestForm";
 // import MyRequests from "./MyRequests";
 // import DonationOffers from "./DonationOffers";
-// import Chat from "./Chat";
+import Chat from "../../components/Chat/Chat";
 import Notifications from "./Notifications";
 // import Feedback from "./Feedback";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +23,7 @@ const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard /> },
     { id: "my-activities", label: "My Activities", icon: <ClipboardList /> },
     { id: "ongoing-campaigns", label: "Ongoing Campaigns", icon: <RotateCw /> },
-    // { id: "chat", label: "Chat Room", icon: <MessageSquare /> },
+    { id: "chat", label: "Chat Room", icon: <MessageSquare /> },
     { id: "notifications", label: "Notifications", icon: <Bell /> },
     // { id: "feedback", label: "Feedbacks", icon: <ClipboardType /> },
     // { id: "profile", label: "Profile", icon: <UserPen /> },
@@ -33,7 +33,7 @@ const componentMap: Record<string, React.FC> = {
     "dashboard": Dashboard,
     "my-activities": VolunteerTasks,
     "ongoing-campaigns" : OngoingCamp,
-    // "chat": Chat,
+    "chat": Chat,
     "notifications": Notifications,
     // "feedback": Feedback
     // "profile": Profile

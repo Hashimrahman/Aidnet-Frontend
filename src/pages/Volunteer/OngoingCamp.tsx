@@ -4,8 +4,8 @@ import { Locate, TriangleAlert, TriangleDashed, Users } from "lucide-react";
 import { useCampaignsMutations } from "../../Mutations/CampaignFetchMutaion";
 import { useCampaignStore } from "../../Store/useStore";
 // import api from "../../services/api";  // Assuming you have an Axios instance
-import { useJoinCampaignMutation } from "../../Mutations/CampJoinMutation";
-import { useLeaveCampaignMutation } from "../../Mutations/CampLeaveMutation";
+import { useJoinCampaignMutation } from "../../Mutations/CampParticipationMutation";
+import { useLeaveCampaignMutation } from "../../Mutations/CampParticipationMutation";
 
 const getUrgencyColor = (urgency: string) => {
     switch (urgency) {
@@ -45,7 +45,7 @@ const OngoingCamp: React.FC = () => {
         console.log("leaving")
     };
 
-    if (isLoading) return <div>Loading campaigns...</div>;
+    if (isLoading) return <div className="text-white">Loading campaigns...</div>;
     if (error instanceof Error) return <div>Error: {error.message}</div>;
     if (data && data.length === 0) return <div>No ongoing campaigns available.</div>;
 

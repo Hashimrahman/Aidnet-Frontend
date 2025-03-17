@@ -1,51 +1,55 @@
 import React, { useState, useEffect } from "react";
 import icon from '../../assets/icon.png';
 import logo from '../../assets/logo.png';
+import { useNavigate } from "react-router-dom";
 import {
-    Bell, ClipboardType, HandHelping, LayoutDashboard,
-    List, MessageCircle, MessageSquare
+    Bell, ClipboardList, ClipboardType, LayoutDashboard, MessageSquare,
+    Presentation,
+    RotateCw,
+    SquareChevronRight,
 } from "lucide-react";
 
+
+// import Dashboard from "./Dashboard";
+// import VolunteerTasks from './Tasks'
+// import RequestForm from "./RequestForm";
+// import MyRequests from "./MyRequests";
+// import DonationOffers from "./DonationOffers";
+import Chat from "../../components/Chat/Chat";
 import Dashboard from "./Dashboard";
-import RequestForm from "./RequestForm";
-import MyRequests from "./MyRequests";
-import DonationOffers from "./DonationOffers";
-// import Chat from "./Chat";
-import Chat from '../../components/Chat/Chat'
-import Notifications from "./Notifications";
-import Feedback from "./Feedback";
-import { useNavigate } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
-import AIChatPopup from "../../components/AiChat/AiChatPopUp";
+import OfferDonations from "./OfferDonations";
+import MyDonations from "./MyDonations";
+// import Notifications from "./Notifications";
+// import Feedback from "./Feedback";
+// import OngoingCamp from "./OngoingCamp";
 
 const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard /> },
-    { id: "request-help", label: "Request Help", icon: <HandHelping /> },
-    { id: "my-requests", label: "My Requests", icon: <List /> },
-    { id: "donation-offers", label: "Donation Offers", icon: <HandHelping /> },
+    { id: "offer-resources", label: "Offer Resources", icon: <SquareChevronRight /> },
+    { id: "my-donation", label: "My Donations", icon: <Presentation /> },
     { id: "chat", label: "Chat Room", icon: <MessageSquare /> },
     { id: "notifications", label: "Notifications", icon: <Bell /> },
-    { id: "feedback", label: "Feedback", icon: <ClipboardType /> }
+    { id: "feedback", label: "Feedbacks", icon: <ClipboardType /> },
+    // { id: "profile", label: "Profile", icon: <UserPen /> },
 ];
 
 const componentMap: Record<string, React.FC> = {
     "dashboard": Dashboard,
-    "request-help": RequestForm,
-    "my-requests": MyRequests,
-    "donation-offers": DonationOffers,
+    "offer-resources": OfferDonations,
+    "my-donation" : MyDonations,
     "chat": Chat,
-    "notifications": Notifications,
-    "feedback": Feedback
+    // "notifications": Notifications,
+    // "feedback": Feedback
+    // "profile": Profile
 };
 
-const UserDashboard: React.FC = () => {
+const DonorDashboard: React.FC = () => {
+    
     const [activeItem, setActiveItem] = useState("dashboard");
     const [isExpanded, setIsExpanded] = useState(false);
     const [showText, setShowText] = useState(false);
     const navigate = useNavigate()
     const token: string | null = localStorage.getItem('token')
-    const role: string | null = localStorage.getItem('role')
-    const queryClient = useQueryClient()
 
     useEffect(() => {
         let timer: NodeJS.Timeout;
@@ -60,17 +64,13 @@ const UserDashboard: React.FC = () => {
     const ActiveComponent = componentMap[activeItem];
 
     const handleLogout = () => {
-        console.log("logout")
         localStorage.clear()
         navigate('/')
     }
 
     return (
-        role == 'affected' ? (
-            <div className="w-full min-h-screen flex bg-[#121212]">
-                <div className={`${activeItem === 'chat' ? "hidden" : "flex"}`}>
-                    <AIChatPopup />
-                </div>
+        token ? (
+            <div className="w-full min-h-screen flex bg-[#121212] ">
                 {/* sidebar */}
                 <div
                     className={`fixed left-0 h-screen bg-[#1E1E1E] py-4 transition-all duration-300 ${isExpanded ? "w-64" : "w-20"
@@ -93,28 +93,28 @@ const UserDashboard: React.FC = () => {
                                 onClick={() => setActiveItem(item.id)}
                             >
                                 {item.icon}
-                                {showText && <span className="flex-1 text-left transition-opacity duration-100">{item.label}</span>}
+                                {showText && <span className="flex-1 text-left transition-opacity duration-100 text-sm">{item.label}</span>}
                             </button>
                         ))}
                     </div>
                     <div className="flex w-full justify-center">
-                        <button className="text-white fixed bottom-10" onClick={handleLogout}>Log Out</button>
+                        <button className="text-white fixed bottom-10" onClick={() => navigate('/')}>Log Out</button>
                     </div>
                 </div>
+
                 {/* active content */}
-                <div className="ml-20 flex-1 md:p-6 overflow-x-auto">
+                <div className="ml-20 md:mx-20 flex-1 p-6 overflow-x-auto">
                     <ActiveComponent />
                 </div>
             </div>) : (
             <div className="w-full flex min-h-screen bg-[#121212] text-white p-10">
                 <div>
-
                     <h1 className="text-3xl">Access Denied!!</h1>
-                    <button onClick={() => navigate('/')} className="bg-green-500 px-4 py-2 mt-6 rounded-md">Go Home</button>
+                    <button onClick={handleLogout} className="bg-green-500 px-4 py-2 mt-6 rounded-md">Go Home</button>
                 </div>
             </div>
         )
     );
 };
 
-export default UserDashboard;
+export default DonorDashboard;

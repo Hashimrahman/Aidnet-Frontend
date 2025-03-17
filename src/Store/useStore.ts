@@ -54,12 +54,24 @@ interface Campaign {
     volunteers_required: number;
     volunteers_registered: number;
     participations: Array<{ id: string; user_id: string; participant_type: string; joined_at: string }>;
-  }
+}
 
-  interface AllCampaigns{
+interface AllCampaigns {
     campaigns: Campaign[],
     setCampaigns: (campaigns: Campaign[]) => void
-  }
+}
+
+
+interface DonationFormState {
+    formData: {
+        amount: number,
+        donationType: string,
+        description: string,
+        modeOfDelivery: 'pickup' | 'delivery';
+    }
+    setFormData: (name: string, value: string) => void;
+    resetForm: () => void;
+}
 
 
 
@@ -132,7 +144,30 @@ export const useRequestStore = create<RequestFormState>((set) => ({
 }))
 
 
-export const useCampaignStore = create<AllCampaigns>((set)=>({
+export const useCampaignStore = create<AllCampaigns>((set) => ({
     campaigns: [],
-    setCampaigns: (campaigns) => set({campaigns}),
+    setCampaigns: (campaigns) => set({ campaigns }),
 }))
+
+
+export const useDonationStore = create<DonationFormState>((set) => ({
+    formData: {
+        amount: 0,
+        donationType: '',
+        description: '',
+        modeOfDelivery: 'pickup',
+    },
+    setFormData: (name, value) =>
+        set((state) => ({
+            formData: { ...state.formData, [name]: value },
+        })),
+    resetForm: () =>
+        set({
+            formData: {
+                amount: 0,
+                assistanceType: '',
+                description: '',
+                modeOfDelivery: 'pickup',
+            }
+        })
+}));

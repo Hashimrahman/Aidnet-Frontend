@@ -3,7 +3,7 @@ import { Phone, MessageSquare, TriangleDashed, Locate, Users, TriangleAlert } fr
 import { useCampaignsMutations } from "../../Mutations/CampaignFetchMutaion";
 import { useCampaignStore } from "../../Store/useStore";
 import camp1 from '../../assets/camp1.jpg'
-import { useJoinCampaignMutation } from "../../Mutations/CampJoinMutation";
+import { useJoinCampaignMutation } from "../../Mutations/CampParticipationMutation";
 import { useLeaveCampaignMutation } from "../../Mutations/CampLeaveMutation";
 const notifications = [
     {
@@ -87,7 +87,6 @@ const Dashboard: React.FC = () => {
                 ))}
             </div>
 
-            {/* Active Campaigns */}
             <h2 className="text-xl md:text-3xl mt-8 md:mt-20 mb-6 font-poppins">Recent Activities</h2>
             <div className="space-y-4">
                 {notifications.map((notification) => (

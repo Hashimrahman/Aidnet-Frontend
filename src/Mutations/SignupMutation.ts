@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import api from "../services/api";
+import { api1 } from "../services/api";
 
 interface UserData {
     first_name: string;
@@ -15,11 +15,11 @@ interface UserData {
 }
 
 const registerUser = async (userData: UserData) => {
-    const response = await api.post("/user/register/", userData);
+    const response = await api1.post("/user/register/", userData);
     return response.data;
 }
 
-export const useSignupMutation = () =>{
+export const useSignupMutation = () => {
     return useMutation({
         mutationFn: registerUser,
     })

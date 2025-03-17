@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import api from "../services/api"
+import {api1} from "../services/api"
 
 interface LoginData {
     email: string,
@@ -7,7 +7,7 @@ interface LoginData {
 }
 
 const loginUser = async(loginData: LoginData) =>{
-    const response = await api.post("/user/login/", loginData);
+    const response = await api1.post("/user/login/", loginData);
     localStorage.setItem("token", response.data.access_token)
     return response.data;
 }

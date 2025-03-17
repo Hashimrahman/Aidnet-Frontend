@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useUserCampaignsMutations } from "../../Mutations/UserSpecificCampaignFetchMutation";
 import { useCampaignStore } from "../../Store/useStore";
+import Swal from 'sweetalert2'
 
 const getUrgencyColor = (urgency: string) => {
     switch (urgency) {
@@ -22,6 +23,22 @@ const getStatusColor = (status: string) => {
         default: return "text-white";
     }
 };
+
+const handleLeave = () =>{
+    Swal.fire({
+        title : "Are you sure to leave?",
+        text: "You won't be able to revert this action!",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Leave!"
+    }).then(()=>{
+        console.log("Leave campaign")
+    }).catch((err)=>{
+        console.log("An error occured!", err);
+        Swal.fire("Error","Unable to leave campaign","error")
+    })
+}
 
 const VolunteerTasks: React.FC = () => {
     const { mutate, data, error, isLoading } = useUserCampaignsMutations();
@@ -72,7 +89,7 @@ const VolunteerTasks: React.FC = () => {
                                 <td className={`border border-gray-700 px-4 py-2 ${getStatusColor(task.status)}`}>{task.status}</td>
                                 <td className="border border-gray-700 px-4 py-2">{formatDate(task.start_date)}</td>
                                 <td className="border border-gray-700 px-4 py-2">
-                                    <button className="bg-blue-400 text-white px-4 py-1 rounded-md hover:bg-blue-600">Edit</button>
+                                    <button className="bg-red-400 text-white px-4 py-1 rounded-md hover:bg-leave-600" onClick={handleLeave}>Leave</button>
                                 </td>
                             </tr>
                         ))}

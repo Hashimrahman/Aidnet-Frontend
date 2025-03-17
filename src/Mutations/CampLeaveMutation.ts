@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query"
-import axios from "axios"
 import { toast } from "react-toastify"
+import { api2 } from "../services/api"
 const token = localStorage.getItem("token")
 
 const leaveCamp = async (campaignId: string) =>{
-    const response = await axios.delete(`http://localhost:8001/campaigns/${campaignId}/leave/`,
+    const response = await api2.delete(`/campaigns/${campaignId}/leave/`,
         {
             headers:{
                 Authorization: `Bearer ${token}`
