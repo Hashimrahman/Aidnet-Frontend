@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { MapPin, Users, Phone, MessageSquare, TriangleDashed, Locate, TriangleAlert } from "lucide-react";
 import camp1 from '../../assets/camp1.jpg';
 import { useCampaignStore } from "../../Store/useStore";
-import { useCampaignsMutations } from "../../Mutations/CampaignFetchMutaion";
+import {  useFetchCampaigns } from "../../Mutations/CampaignFetchMutaion";
 import { useJoinCampaignMutation, useLeaveCampaignMutation } from "../../Mutations/CampParticipationMutation";
 
 const camp = [
@@ -12,21 +12,22 @@ const camp = [
 
 const Dashboard: React.FC = () => {
 
-    const { mutate, data, error, isLoading } = useCampaignsMutations();
+    const { data, error, isLoading } = useFetchCampaigns();
     const { mutate: joinCampaign } = useJoinCampaignMutation()
     const { mutate: leaveCampaign } = useLeaveCampaignMutation()
     const setCampaigns = useCampaignStore((state) => state.setCampaigns);
 
-    useEffect(() => {
-        mutate()
-    }, [mutate])
+    // useEffect(() => {
+    //     mutate()
+    // }, [mutate])
 
-    useEffect(() => {
-        if (data) {
-            setCampaigns(data);
-            console.log("current camps", data)
-        }
-    }, [data, setCampaigns])
+    // useEffect(() => {
+    //     if (data) {
+    //         setCampaigns(data);
+    //         console.log("current camps", data)
+    //     }
+    // }, [data, setCampaigns])
+    console.log("camps user", data)
 
     const handleJoin = (campaignId: string) => {
         console.log("joining")

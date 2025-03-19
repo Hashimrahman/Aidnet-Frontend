@@ -31,10 +31,12 @@ const leaveCamp = async(campaignId: string) =>{
 }
 
 export const useJoinCampaignMutation = () => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: joinCamp,
         onSuccess: (data) =>{
             toast.success("Successfully Joined Camp!", { position: "top-right" });
+            queryClient.invalidateQueries(["campaigns"]); 
             console.log("successfully joined camp", data)
         },
         onError: (err) =>{
@@ -45,10 +47,12 @@ export const useJoinCampaignMutation = () => {
 }
 
 export const useLeaveCampaignMutation = () =>{
+    const queryClient = useQueryClient()
     return useMutation({
         mutationFn: leaveCamp,
         onSuccess: (data) =>{
             toast.success("Successfully Left Camp!", {position: "top-right"});
+            queryClient.invalidateQueries(["campaigns"]); 
             console.log("Scuccessfully left camp", data)
         },
         onError: (err) =>{

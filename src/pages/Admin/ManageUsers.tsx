@@ -68,15 +68,19 @@
 
 import React from "react";
 import { Users, CheckCircle, XCircle, Clock } from "lucide-react";
+import { useFetchUsers } from "../../Mutations/UserFetchMuation";
 
-const users = [
-    { id: 1, name: "John Doe", role: "Admin", email: "john@example.com", status: "Active", createdAt: "2025-03-10", icon: <CheckCircle size={20} className="text-green-500 inline mr-3" /> },
-    { id: 2, name: "Jane Smith", role: "User", email: "jane@example.com", status: "Inactive", createdAt: "2025-03-08", icon: <XCircle size={20} className="text-red-500 inline mr-3" /> },
-    { id: 3, name: "Robert Brown", role: "Volunteer", email: "robert@example.com", status: "Pending", createdAt: "2025-03-05", icon: <Clock size={20} className="text-yellow-500 inline mr-3" /> },
-    { id: 4, name: "Emily White", role: "Donor", email: "emily@example.com", status: "Active", createdAt: "2025-03-01", icon: <CheckCircle size={20} className="text-green-500 inline mr-3" /> },
-];
+// const users = [
+//     { id: 1, name: "John Doe", role: "Admin", email: "john@example.com", status: "Active", createdAt: "2025-03-10", icon: <CheckCircle size={20} className="text-green-500 inline mr-3" /> },
+//     { id: 2, name: "Jane Smith", role: "User", email: "jane@example.com", status: "Inactive", createdAt: "2025-03-08", icon: <XCircle size={20} className="text-red-500 inline mr-3" /> },
+//     { id: 3, name: "Robert Brown", role: "Volunteer", email: "robert@example.com", status: "Pending", createdAt: "2025-03-05", icon: <Clock size={20} className="text-yellow-500 inline mr-3" /> },
+//     { id: 4, name: "Emily White", role: "Donor", email: "emily@example.com", status: "Active", createdAt: "2025-03-01", icon: <CheckCircle size={20} className="text-green-500 inline mr-3" /> },
+// ];
 
 const ManageUsers: React.FC = () => {
+
+    const { data: users } = useFetchUsers()
+
     return (
         <div className="min-h-screen text-white pt-10 px-4 md:px-10">
             <h1 className="text-3xl md:text-4xl font-poppins">User Management</h1>
@@ -90,13 +94,13 @@ const ManageUsers: React.FC = () => {
                             <th className="p-4 text-gray-700 font-semibold">Name</th>
                             <th className="p-4 text-gray-700 font-semibold">Role</th>
                             <th className="p-4 text-gray-700 font-semibold">Email</th>
+                            <th className="p-4 text-gray-700 font-semibold">Phone number</th>
                             <th className="p-4 text-gray-700 font-semibold">Status</th>
-                            <th className="p-4 text-gray-700 font-semibold">Created At</th>
                             <th className="p-4 text-gray-700 font-semibold">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user, index) => (
+                        {users?.map((user, index) => (
                             <tr key={user.id} className={`border-b ${index % 2 === 0 ? "bg-gray-50" : "bg-white"}`}>
                                 <td className="p-4 text-gray-800">{user.id}</td>
                                 <td className="p-4 text-gray-800 flex items-center gap-3">
@@ -105,11 +109,12 @@ const ManageUsers: React.FC = () => {
                                 </td>
                                 <td className="p-4 text-gray-800">{user.role}</td>
                                 <td className="p-4 text-gray-800">{user.email}</td>
+                                <td className="p-4 text-gray-800">{user.phone_number}</td>
                                 <td className="p-4 text-gray-800 flex items-center gap-2">
-                                    {user.icon}
-                                    <span>{user.status}</span>
+                                    {user.is_active ? (<CheckCircle size={20} className="text-green-500 inline mr-3" />) : (<XCircle size={20} className="text-red-500 inline mr-3" />)}
+                                    <span>{user.is_active ? 'Active' : 'Inactive'}</span>
                                 </td>
-                                <td className="p-4 text-gray-800">{user.createdAt}</td>
+
                                 <td className="p-4">
                                     <button className="bg-[#31B18D] text-white px-4 py-2 rounded-lg hover:bg-[#289B77] transition">
                                         Edit

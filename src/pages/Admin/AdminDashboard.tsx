@@ -10,23 +10,22 @@ import Dashboard from "./Dashboard";
 import ManageUsers from "./ManageUsers";
 import ManageRequests from "./ManageRequests";
 import ManageDonations from "./ManageDonations";
-// import ManageVolunteers from "./ManageVolunteers";
 import Reports from "./Reports";
-// import Notifications from "./Notifications";
 import AdminSettings from "./AdminSettings";
 import { useNavigate } from "react-router-dom";
-// import { useQueryClient } from "@tanstack/react-query";
 import AIChatPopup from "../../components/AiChat/AiChatPopUp";
+// import ManageVolunteers from "./ManageVolunteers";
+// import Notifications from "./Notifications";
 
 const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard /> },
     { id: "manage-users", label: "Manage Users", icon: <Users /> },
     { id: "manage-requests", label: "Relief Requests", icon: <ClipboardList /> },
     { id: "manage-donations", label: "Donations", icon: <HandHelping /> },
-    // { id: "manage-volunteers", label: "Volunteers", icon: <FileText /> },
     { id: "reports", label: "Reports & Analytics", icon: <BarChart3 /> },
-    // { id: "notifications", label: "Notifications", icon: <Bell /> },
     { id: "settings", label: "Settings", icon: <Settings /> }
+    // { id: "manage-volunteers", label: "Volunteers", icon: <FileText /> },
+    // { id: "notifications", label: "Notifications", icon: <Bell /> },
 ];
 
 const componentMap: Record<string, React.FC> = {
@@ -34,10 +33,10 @@ const componentMap: Record<string, React.FC> = {
     "manage-users": ManageUsers,
     "manage-requests": ManageRequests,
     "manage-donations": ManageDonations,
-    // "manage-volunteers": ManageVolunteers,
     "reports": Reports,
-    // "notifications": Notifications,
     "settings": AdminSettings
+    // "manage-volunteers": ManageVolunteers,
+    // "notifications": Notifications,
 };
 
 const AdminDashboard: React.FC = () => {

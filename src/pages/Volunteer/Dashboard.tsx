@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Phone, MessageSquare, TriangleDashed, Locate, Users, TriangleAlert } from "lucide-react";
-import { useCampaignsMutations } from "../../Mutations/CampaignFetchMutaion";
+import { useFetchCampaigns } from "../../Mutations/CampaignFetchMutaion";
 import { useCampaignStore } from "../../Store/useStore";
 import camp1 from '../../assets/camp1.jpg'
 import { useJoinCampaignMutation } from "../../Mutations/CampParticipationMutation";
@@ -47,21 +47,21 @@ const getUrgencyColor = (urgency: string) => {
 };
 
 const Dashboard: React.FC = () => {
-    const { mutate, data } = useCampaignsMutations();
+    const { data } = useFetchCampaigns();
     const setCampaigns = useCampaignStore((state) => state.setCampaigns);
     const { mutate: joinCampaign} = useJoinCampaignMutation()
         const { mutate: leaveCampaign} = useLeaveCampaignMutation()
 
-    useEffect(() => {
-        mutate();
-    }, [mutate]);
+    // useEffect(() => {
+    //     mutate();
+    // }, [mutate]);
 
-    useEffect(() => {
-        if (data) {
-            setCampaigns(data);
-            console.log("camps", data)
-        }
-    }, [data, setCampaigns]);
+    // useEffect(() => {
+    //     if (data) {
+    //         setCampaigns(data);
+    //         console.log("camps", data)
+    //     }
+    // }, [data, setCampaigns]);
 
     const handleJoin = (campaignId: string) => {
         joinCampaign(campaignId)

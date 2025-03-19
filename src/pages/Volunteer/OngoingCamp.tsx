@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import camp1 from "../../assets/camp1.jpg";
 import { Locate, TriangleAlert, TriangleDashed, Users } from "lucide-react";
-import { useCampaignsMutations } from "../../Mutations/CampaignFetchMutaion";
+import { useCampaignsMutations, useFetchCampaigns } from "../../Mutations/CampaignFetchMutaion";
 import { useCampaignStore } from "../../Store/useStore";
 // import api from "../../services/api";  // Assuming you have an Axios instance
 import { useJoinCampaignMutation } from "../../Mutations/CampParticipationMutation";
@@ -21,21 +21,22 @@ const getUrgencyColor = (urgency: string) => {
 };
 
 const OngoingCamp: React.FC = () => {
-    const { mutate, data, error, isLoading } = useCampaignsMutations();
+    const { data, error, isLoading } = useFetchCampaigns();
     const { mutate: joinCampaign, isLoading: isJoining, error: joinError } = useJoinCampaignMutation()
     const { mutate: leaveCampaign, isLoading: isLeaving, error: leaveError } = useLeaveCampaignMutation()
-    const setCampaigns = useCampaignStore((state) => state.setCampaigns);
+    // const setCampaigns = useCampaignStore((state) => state.setCampaigns);
 
-    useEffect(() => {
-        mutate();
-    }, [mutate]);
+    // useEffect(() => {
+    //     mutate();
+    // }, [mutate]);
 
-    useEffect(() => {
-        if (data) {
-            setCampaigns(data);
-            console.log("camps", data)
-        }
-    }, [data, setCampaigns]);
+    // useEffect(() => {
+    //     if (data) {
+    //         setCampaigns(data);
+    //         console.log("camps", data)
+    //     }
+    // }, [data, setCampaigns]);
+    console.log("camps user", data)
 
     const handleJoin = (campaignId: string) => {
         joinCampaign(campaignId)
